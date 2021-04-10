@@ -1,0 +1,11 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type FirstQueryType {
+  text: String!
+}
+
+type Query {
+  firstQuery: FirstQueryType!
+}
