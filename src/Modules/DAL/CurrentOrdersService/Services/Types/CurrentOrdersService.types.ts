@@ -1,12 +1,9 @@
 import { CurrentOrderSchemaDocument } from '../../CurrentOrders.sсhema';
+import { EditIdArrTypeEnum } from '../../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 export type EditCurrentOrdersArrDTO = {
   orderId: string,
-  editingType: EditCurrentOrdersTypeEnum,
+  editingType: EditIdArrTypeEnum,
   currentOrder: CurrentOrderSchemaDocument,
 }
 
-export enum EditCurrentOrdersTypeEnum {
-  Deleting = 'Deleting',
-  Adding = 'Adding'
-}

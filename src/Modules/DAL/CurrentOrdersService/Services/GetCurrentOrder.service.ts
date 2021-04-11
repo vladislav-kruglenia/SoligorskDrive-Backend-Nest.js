@@ -35,7 +35,7 @@ export class GetCurrentOrderService {
   private _getSearchObject(mainOrderData: MainOrderDataSearch) {
     const { date, direction, startHour } = mainOrderData;
 
-    // направления, времени или времени может не быть
+    // направления, времени или даты может не быть
     let searchObject: MainOrderDataSearch = {};
     searchObject = direction ? { ...searchObject, direction } : searchObject;
     searchObject = date ? { ...searchObject, date } : searchObject;

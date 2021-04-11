@@ -16,6 +16,9 @@ export class User {
   userLogin: string;
 
   @Prop({required: true})
+  userPassword: string;
+
+  @Prop({required: true})
   currentOrders: string[];
 
   @Prop({required: true})

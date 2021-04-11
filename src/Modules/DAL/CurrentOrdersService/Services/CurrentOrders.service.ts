@@ -4,29 +4,33 @@ import { CurrentOrder, CurrentOrderSchemaDocument } from '../CurrentOrders.sсhe
 import { Model } from 'mongoose';
 import { MainOrderData } from '../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
 import { GetCurrentOrderService } from './GetCurrentOrder.service';
-import { EditCurrentOrdersArrDTO, EditCurrentOrdersTypeEnum } from './Types/CurrentOrdersService.types';
+import { EditCurrentOrdersArrDTO} from './Types/CurrentOrdersService.types';
 import { EditingCurrentOrdersArrService } from './EditingCurrentOrdersArr.service';
 import { EditCurrentOrderIndexDTO } from './Types/EditingCurrentOrdersArrService.types';
+import { EditOrdersIdArrService } from '../../../../AppGlobal/AppGlobalModules/EditOrdersIdArr/EditOrdersIdArr.service';
+import { EditOrderIdArrayDTO } from '../../../../AppGlobal/AppGlobalModules/EditOrdersIdArr/EditOrdersIdArrService.types';
+import { EditIdArrTypeEnum } from '../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 @Injectable()
 export class CurrentOrdersService {
   constructor(
     @InjectModel(CurrentOrder.name) private currentOrderModel: Model<CurrentOrderSchemaDocument>,
     private getCurrentOrder: GetCurrentOrderService,
-    private editingCurrentOrdersArr: EditingCurrentOrdersArrService,
+    // private editingCurrentOrdersArr: EditingCurrentOrdersArrService,
+    private editingCurrentOrdersArr: EditOrdersIdArrService,
   ) {
   }
 
   async editCurrentOrdersArr(editCurrentOrdersArrDTO: EditCurrentOrdersArrDTO) {
     let { currentOrder, orderId, editingType } = editCurrentOrdersArrDTO;
-    const editCurrentOrderIndexDTO: EditCurrentOrderIndexDTO = { currentOrder, orderId };
+    const editCurrentOrderIndexDTO: EditOrderIdArrayDTO = { ordersIdArr: currentOrder.currentOrders, orderId };
 
     switch (editingType) {
-      case EditCurrentOrdersTypeEnum.Adding:
-        currentOrder = this.editingCurrentOrdersArr.addOrderId(editCurrentOrderIndexDTO);
+      case EditIdArrTypeEnum.Adding:
+        currentOrder.currentOrders = this.editingCurrentOrdersArr.addOrderId(editCurrentOrderIndexDTO);
         break;
-      case EditCurrentOrdersTypeEnum.Deleting:
-        currentOrder = this.editingCurrentOrdersArr.deleteOrderId(editCurrentOrderIndexDTO);
+      case EditIdArrTypeEnum.Deleting:
+        currentOrder.currentOrders = this.editingCurrentOrdersArr.deleteOrderId(editCurrentOrderIndexDTO);
         break;
     }
 
