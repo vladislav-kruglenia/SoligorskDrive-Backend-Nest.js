@@ -6,6 +6,7 @@ import { UsersSearchService } from './Services/UsersSearch.service';
 import { AddUsersService } from './Services/AddUsers.service';
 import { EditOrdersIdArrModule } from '../../../AppGlobal/AppGlobalModules/EditOrdersIdArr/EditOrdersIdArr.module';
 import { UsersDocumentActionsService } from './Services/UsersDocumentActions.service';
+import { UsersEditOrdersArrService } from './Services/UsersEditOrdersArr.service';
 
 @Module({
   imports: [
@@ -14,8 +15,8 @@ import { UsersDocumentActionsService } from './Services/UsersDocumentActions.ser
       { name: User.name, schema: UserSchema },
     ]),
   ],
-  providers: [UsersEditDataService, UsersSearchService, AddUsersService, UsersDocumentActionsService],
-  exports: [UsersEditDataService, UsersSearchService, AddUsersService],
+  providers: [UsersEditDataService, UsersSearchService, AddUsersService, UsersDocumentActionsService, UsersEditOrdersArrService],
+  exports: [UsersEditDataService, UsersSearchService, AddUsersService, UsersEditOrdersArrService],
 })
 export class UsersModule {
 }

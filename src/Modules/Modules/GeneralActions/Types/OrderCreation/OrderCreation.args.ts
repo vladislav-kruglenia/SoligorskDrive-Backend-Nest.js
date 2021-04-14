@@ -1,7 +1,6 @@
-import { MainOrderData } from '../../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ArgsType()
+@InputType()
 export class ClientData {
   @Field()
   clientName: string;
@@ -9,12 +8,12 @@ export class ClientData {
   @Field()
   clientNumberPhone: string;
 
-  @Field()
-  clientId: string;
+  @Field({nullable: true})
+  clientId?: string;
 
 }
 
-@ArgsType()
+@InputType()
 export class SecondaryOrderData {
   @Field()
   haltName: string;
@@ -29,16 +28,28 @@ export class SecondaryOrderData {
   numberSeatsOrdered: number;
 }
 
-@ArgsType()
+@InputType()
+export class MainOrderData {
+  @Field()
+  direction: string;
+
+  @Field()
+  date: string;
+
+  @Field()
+  startHour: number;
+}
+
+@InputType()
 export class Order {
   @Field()
   orderId: string;
 
   @Field()
-  mainOrderData: MainOrderData;
-
-  @Field()
   secondaryOrderData: SecondaryOrderData;
+
+  @Field(type => MainOrderData)
+  mainOrderData: MainOrderData;
 
   @Field()
   clientData: ClientData;

@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { FreeSeat, FreeSeatSchema } from './FreeSeats.sсhema';
+import { Free_Seat, FreeSeatSchema } from './FreeSeats.sсhema';
 import { FreeSeatsSearchService } from './Services/FreeSeatsSearch.service';
 import { FreeSeatsService } from './Services/FreeSeats.service';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: FreeSeat.name, schema: FreeSeatSchema },
+      { name: Free_Seat.name, schema: FreeSeatSchema },
     ]),
   ],
   providers: [FreeSeatsSearchService, FreeSeatsService],

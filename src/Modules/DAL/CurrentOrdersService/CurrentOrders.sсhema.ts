@@ -3,14 +3,14 @@ import { Document } from 'mongoose';
 import { MainOrderData } from '../../../AppGlobal/AppGlobalTypes/GlobalShemes';
 
 @Schema()
-export class CurrentOrder {
+export class Current_Order {
   @Prop({required: true})
   mainOrderData: MainOrderData;
 
   @Prop({required: true})
   currentOrders: string[];
 }
-export type CurrentOrderSchemaDocument = CurrentOrder & Document;
+export type CurrentOrderSchemaDocument = Current_Order & Document;
 
 
-export const CurrentOrderSchema = SchemaFactory.createForClass(CurrentOrder);
+export const CurrentOrderSchema = SchemaFactory.createForClass(Current_Order);

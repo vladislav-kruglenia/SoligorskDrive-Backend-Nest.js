@@ -6,5 +6,5 @@ export interface GetOneFreeSeatsDTO extends MainOrderData {
 
 export type GetFreeSeatsDTO = {
   direction: string,
-  startHour: number,
+  date: string,
 }

@@ -11,7 +11,7 @@ export class ClientData {
   clientNumberPhone: string;
 
   @Prop({ required: true })
-  clientId: string;
+  clientId?: string;
 
 }
 
@@ -32,7 +32,7 @@ export class SecondaryOrderData {
 
 @Schema()
 export class Order {
-  @Prop({ required: true })
+  @Prop({ required: true, unique: true, })
   orderId: string;
 
   @Prop({ required: true })

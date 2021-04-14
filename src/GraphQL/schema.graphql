@@ -6,6 +6,53 @@ type FirstQueryType {
   text: String!
 }
 
+type OrderCreationModel {
+  userId: String
+  orderId: String!
+}
+
+type TravelInfoModel {
+  startHourTravel: Float!
+  priceTravel: Float!
+  remainingNumberSeats: Float!
+}
+
 type Query {
   firstQuery: FirstQueryType!
+  TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
+}
+
+input TravelInfoArgs {
+  direction: String!
+  date: String!
+}
+
+type Mutation {
+  createOrder(createOrderData: Order!): OrderCreationModel!
+}
+
+input Order {
+  orderId: String!
+  secondaryOrderData: SecondaryOrderData!
+  mainOrderData: MainOrderData!
+  clientData: ClientData!
+}
+
+input SecondaryOrderData {
+  haltName: String!
+  haltTime: String!
+  orderPrice: Float!
+  numberSeatsOrdered: Float!
+}
+
+input MainOrderData {
+  direction: String!
+  date: String!
+  startHour: Float!
+}
+
+input ClientData {
+  clientName: String!
+  clientNumberPhone: String!
+  clientId: String
 }

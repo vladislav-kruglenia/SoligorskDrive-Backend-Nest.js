@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CurrentOrder } from '../CurrentOrdersService/CurrentOrders.sсhema';
+import { Current_Order } from '../CurrentOrdersService/CurrentOrders.sсhema';
 import { Model } from 'mongoose';
 import { ArchiveOrderSchemaDocument } from './ArchiveOrders.sсhema';
 import { AddArchiveDTO } from './ArchiveOrdersService.types';
@@ -8,7 +8,7 @@ import { AddArchiveDTO } from './ArchiveOrdersService.types';
 @Injectable()
 export class ArchiveOrdersService {
   constructor(
-    @InjectModel(CurrentOrder.name) private archiveOrdersModel: Model<ArchiveOrderSchemaDocument>,
+    @InjectModel(Current_Order.name) private archiveOrdersModel: Model<ArchiveOrderSchemaDocument>,
   ) {
   }
 

@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CurrentOrder, CurrentOrderSchemaDocument } from '../CurrentOrders.sсhema';
+import { Current_Order, CurrentOrderSchemaDocument } from '../CurrentOrders.sсhema';
 import { Model } from 'mongoose';
 import { MainOrderDataSearch } from '../../../../AppGlobal/AppGlobalTypes/Types';
 import { MainOrderData } from '../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
@@ -8,21 +8,20 @@ import { MainOrderData } from '../../../../AppGlobal/AppGlobalTypes/GlobalShemes
 @Injectable()
 export class GetCurrentOrderService {
   constructor(
-    @InjectModel(CurrentOrder.name) private currentOrderModel: Model<CurrentOrderSchemaDocument>,
+    @InjectModel(Current_Order.name) private currentOrderModel: Model<CurrentOrderSchemaDocument>,
   ) {
   }
 
   async getOneCurrentOrder(mainOrderData: MainOrderData):Promise<CurrentOrderSchemaDocument> {
-    const searchObject = this._getSearchObject(mainOrderData);
     try {
-      return this.currentOrderModel.findOne(searchObject);
+      return this.currentOrderModel.findOne({mainOrderData});
     } catch (e) {
       console.log(e);
       throw new HttpException('No current order found with this ID.', 404);
     }
   }
 
-  async getCurrentOrder(mainOrderData: MainOrderDataSearch): Promise<CurrentOrderSchemaDocument[]> {
+  async getCurrentOrders(mainOrderData: MainOrderDataSearch): Promise<CurrentOrderSchemaDocument[]> {
     const searchObject = this._getSearchObject(mainOrderData);
     try {
       return this.currentOrderModel.find(searchObject);

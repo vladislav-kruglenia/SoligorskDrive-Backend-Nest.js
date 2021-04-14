@@ -1,13 +1,13 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { FreeSeat, FreeSeatSchemaDocument } from '../FreeSeats.sсhema';
+import { Free_Seat, FreeSeatSchemaDocument } from '../FreeSeats.sсhema';
 import { Model } from 'mongoose';
 import { AddFreeSeatDTO, DeleteFreeSeatDTO, EditNumberFreeSeatsDTO } from './Types/FreeSeatsService.types';
 
 @Injectable()
 export class FreeSeatsService {
   constructor(
-    @InjectModel(FreeSeat.name) private freeSeatModel: Model<FreeSeatSchemaDocument>,
+    @InjectModel(Free_Seat.name) private freeSeatModel: Model<FreeSeatSchemaDocument>,
   ) {
   }
 

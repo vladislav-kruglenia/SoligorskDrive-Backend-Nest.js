@@ -1,12 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { CurrentOrder, CurrentOrderSchemaDocument } from '../CurrentOrders.sсhema';
+import { Current_Order, CurrentOrderSchemaDocument } from '../CurrentOrders.sсhema';
 import { Model } from 'mongoose';
 import { MainOrderData } from '../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
 import { GetCurrentOrderService } from './GetCurrentOrder.service';
-import { EditCurrentOrdersArrDTO} from './Types/CurrentOrdersService.types';
-import { EditingCurrentOrdersArrService } from './EditingCurrentOrdersArr.service';
-import { EditCurrentOrderIndexDTO } from './Types/EditingCurrentOrdersArrService.types';
+import { EditCurrentOrdersArrDTO } from './Types/CurrentOrdersService.types';
 import { EditOrdersIdArrService } from '../../../../AppGlobal/AppGlobalModules/EditOrdersIdArr/EditOrdersIdArr.service';
 import { EditOrderIdArrayDTO } from '../../../../AppGlobal/AppGlobalModules/EditOrdersIdArr/EditOrdersIdArrService.types';
 import { EditIdArrTypeEnum } from '../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
@@ -14,7 +12,7 @@ import { EditIdArrTypeEnum } from '../../../../AppGlobal/AppGlobalTypes/GlobalEn
 @Injectable()
 export class CurrentOrdersService {
   constructor(
-    @InjectModel(CurrentOrder.name) private currentOrderModel: Model<CurrentOrderSchemaDocument>,
+    @InjectModel(Current_Order.name) private currentOrderModel: Model<CurrentOrderSchemaDocument>,
     private getCurrentOrder: GetCurrentOrderService,
     // private editingCurrentOrdersArr: EditingCurrentOrdersArrService,
     private editingCurrentOrdersArr: EditOrdersIdArrService,

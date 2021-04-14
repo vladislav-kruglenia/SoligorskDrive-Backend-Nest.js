@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 import { MainOrderData } from '../../../AppGlobal/AppGlobalTypes/GlobalShemes';
 
 @Schema()
-export class FreeSeat {
+export class Free_Seat {
   @Prop({required: true})
   mainOrderData: MainOrderData;
 
@@ -13,7 +13,7 @@ export class FreeSeat {
   @Prop()
   priceSeat: number;
 }
-export type FreeSeatSchemaDocument = FreeSeat & Document;
+export type FreeSeatSchemaDocument = Free_Seat & Document;
 
 
-export const FreeSeatSchema = SchemaFactory.createForClass(FreeSeat);
+export const FreeSeatSchema = SchemaFactory.createForClass(Free_Seat);

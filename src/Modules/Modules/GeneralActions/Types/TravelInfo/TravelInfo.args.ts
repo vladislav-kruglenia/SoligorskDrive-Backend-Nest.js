@@ -1,10 +1,10 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ArgsType()
+@InputType()
 export class TravelInfoArgs {
   @Field()
   direction: string;
 
   @Field()
-  startHour: number;
+  date: string;
 }
