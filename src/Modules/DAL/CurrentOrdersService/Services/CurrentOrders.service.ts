@@ -19,7 +19,7 @@ export class CurrentOrdersService {
   ) {
   }
 
-  async editCurrentOrdersArr(editCurrentOrdersArrDTO: EditCurrentOrdersArrDTO) {
+  async editCurrentOrdersArr(editCurrentOrdersArrDTO: EditCurrentOrdersArrDTO): Promise<CurrentOrderSchemaDocument> {
     let { currentOrder, orderId, editingType } = editCurrentOrdersArrDTO;
     const editCurrentOrderIndexDTO: EditOrderIdArrayDTO = { ordersIdArr: currentOrder.currentOrders, orderId };
 
@@ -33,15 +33,16 @@ export class CurrentOrdersService {
     }
 
     try {
-      await currentOrder.save()
+      await currentOrder.save();
+      return currentOrder
     } catch (e) {
       console.log(e);
       throw new HttpException('Failed to save the current order.', HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async deleteCurrentOrder(mainOrderData: MainOrderData) {
-    const currentOrder = await this.getCurrentOrder.getOneCurrentOrder(mainOrderData);
+  async deleteCurrentOrder(currentOrder: CurrentOrderSchemaDocument) {
+    // const currentOrder = await this.getCurrentOrder.getOneCurrentOrder(mainOrderData);
 
     try {
       await currentOrder.delete();

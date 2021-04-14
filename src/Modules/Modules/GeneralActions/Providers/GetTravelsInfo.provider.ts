@@ -13,11 +13,12 @@ export class GetTravelsInfoProvider {
   async getTravelsInfo(getTravelsInfoDTO: TravelInfoArgs): Promise<TravelInfoModel[]>{
     const freeSeatsDocument = await this.freeSeatsSearch.getFreeSeats(getTravelsInfoDTO);
 
-    return this.mapTravelInfoModel(freeSeatsDocument)
+    return this._mapTravelInfoModel(freeSeatsDocument)
   }
 
 
-  private mapTravelInfoModel(freeSeatsDocument: FreeSeatSchemaDocument[]): TravelInfoModel[]{
+  private _mapTravelInfoModel(freeSeatsDocument: FreeSeatSchemaDocument[]): TravelInfoModel[]{
+
     return freeSeatsDocument.map((freeSeatDocument: FreeSeatSchemaDocument) => {
       const {mainOrderData, numberFreeSeats, priceSeat} = freeSeatDocument;
 

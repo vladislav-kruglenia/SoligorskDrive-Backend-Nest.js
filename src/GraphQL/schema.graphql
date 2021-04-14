@@ -17,6 +17,11 @@ type TravelInfoModel {
   remainingNumberSeats: Float!
 }
 
+type RemoveOrderModel {
+  orderId: String!
+  userId: String
+}
+
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
@@ -29,6 +34,7 @@ input TravelInfoArgs {
 
 type Mutation {
   createOrder(createOrderData: Order!): OrderCreationModel!
+  removeOrder(removeOrderData: RemoveOrderArgs!): RemoveOrderModel!
 }
 
 input Order {
@@ -55,4 +61,10 @@ input ClientData {
   clientName: String!
   clientNumberPhone: String!
   clientId: String
+}
+
+input RemoveOrderArgs {
+  orderId: String!
+  mainOrderData: MainOrderData!
+  userId: String
 }

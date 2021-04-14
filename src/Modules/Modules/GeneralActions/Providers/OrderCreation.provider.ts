@@ -33,22 +33,22 @@ export class OrderCreationProvider {
     const freeSeatsNumber = createOrderDTO.secondaryOrderData.numberSeatsOrdered;
     const currentOrdersDTO: MainOrderData = { ...mainOrderData };
 
-    await this.checkIsUniqueOrderId(orderId);
+    await this._checkIsUniqueNewOrderId(orderId);
     await this.orders.addNewOrder(createOrderDTO);
-    await this.addOrderIdInCurrentOrders(currentOrdersDTO, orderId);
-    if(userId) await this.updateUserData(userId, orderId);
-    await this.updateFreeSeatsNumber(freeSeatsNumber, mainOrderData);
+    await this._addOrderIdInCurrentOrders(currentOrdersDTO, orderId);
+    if(userId) await this._updateUserData(userId, orderId);
+    await this._updateFreeSeatsNumber(freeSeatsNumber, mainOrderData);
 
     return { orderId, userId };
   }
 
-  private async checkIsUniqueOrderId(orderId: string) {
+  private async _checkIsUniqueNewOrderId(orderId: string) {
     const order = await this.orders.getOrderById(orderId);
     if (order) throw new HttpException('OrderId is not unique', HttpStatus.NOT_ACCEPTABLE);
   }
 
-  private async addOrderIdInCurrentOrders(currentOrdersDTO: MainOrderData, orderId: string) {
-    let currentOrder = await this.getCurrentOrder(currentOrdersDTO);
+  private async _addOrderIdInCurrentOrders(currentOrdersDTO: MainOrderData, orderId: string) {
+    let currentOrder = await this._getCurrentOrder(currentOrdersDTO);
 
     if (currentOrder) {
       const addOrderIdDTO: EditCurrentOrdersArrDTO = { currentOrder, orderId, editingType: EditIdArrTypeEnum.Adding };
@@ -56,11 +56,11 @@ export class OrderCreationProvider {
 
     } else {
       await this.currentOrders.addCurrentOrder(currentOrdersDTO);
-      await this.addOrderIdInCurrentOrders(currentOrdersDTO, orderId);
+      await this._addOrderIdInCurrentOrders(currentOrdersDTO, orderId);
     }
   }
 
-  private async updateUserData(userId: string, orderId: string) {
+  private async _updateUserData(userId: string, orderId: string) {
     const userDocument = await this.usersSearch.getUserById(userId);
     if (!userDocument) throw new HttpException('User not found.', HttpStatus.NOT_FOUND);
 
@@ -68,7 +68,7 @@ export class OrderCreationProvider {
     await this.usersEditOrdersArr.addCurrentOrderIndex(dto);
   }
 
-  private async updateFreeSeatsNumber(numberSeat: number, mainOrderData: MainOrderData){
+  private async _updateFreeSeatsNumber(numberSeat: number, mainOrderData: MainOrderData){
     const documentFreeSeat = await this.freeSeatsSearch.getOneFreeSeats(mainOrderData);
 
     if(documentFreeSeat) {
@@ -76,11 +76,11 @@ export class OrderCreationProvider {
       await this.freeSeats.editNumberFreeSeats(dto)
     } else {
       await this.freeSeats.addFreeSeat(mainOrderData);
-      this.updateFreeSeatsNumber(numberSeat, mainOrderData)
+      this._updateFreeSeatsNumber(numberSeat, mainOrderData)
     }
   }
 
-  private async getCurrentOrder(currentOrdersDTO: MainOrderData) {
+  private async _getCurrentOrder(currentOrdersDTO: MainOrderData) {
     return await this.getCurrentOrders.getOneCurrentOrder(currentOrdersDTO);
   }
 }
