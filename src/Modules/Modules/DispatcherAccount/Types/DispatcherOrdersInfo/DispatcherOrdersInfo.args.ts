@@ -1,14 +1,13 @@
-import { ArgsType, Field } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
-@ArgsType()
+@InputType()
 export class DispatcherOrdersInfoArgs {
-  @Field()
-  direction?: string;
-
-  @Field()
+  @Field({nullable: true})
   date?: string;
 
-  @Field()
+  @Field({nullable: true})
   startHour?: number;
 
+  @Field({nullable: true})
+  direction?: string;
 }

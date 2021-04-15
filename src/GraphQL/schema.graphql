@@ -22,14 +22,34 @@ type RemoveOrderModel {
   userId: String
 }
 
+type DispatcherOrderData {
+  idOrder: String!
+  direction: String!
+  clientName: String!
+  clientPhone: String!
+}
+
+type DispatcherOrdersModel {
+  date: String!
+  time: Float!
+  orders: [DispatcherOrderData!]!
+}
+
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
+  DispatcherOrdersInfo(dispatcherOrdersInfoData: DispatcherOrdersInfoArgs!): [DispatcherOrdersModel!]!
 }
 
 input TravelInfoArgs {
   direction: String!
   date: String!
+}
+
+input DispatcherOrdersInfoArgs {
+  date: String
+  startHour: Float
+  direction: String
 }
 
 type Mutation {
