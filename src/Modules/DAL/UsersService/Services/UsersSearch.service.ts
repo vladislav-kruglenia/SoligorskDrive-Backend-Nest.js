@@ -27,7 +27,7 @@ export class UsersSearchService {
 
     } catch (e) {
       console.log(e);
-      throw new HttpException('Failed to find user document.', HttpStatus.NOT_FOUND);
+      // throw new HttpException('Failed to find user document.', HttpStatus.NOT_FOUND);
     }
   }
 

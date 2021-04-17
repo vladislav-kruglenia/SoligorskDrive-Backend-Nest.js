@@ -35,6 +35,10 @@ type DispatcherOrdersModel {
   orders: [DispatcherOrderData!]!
 }
 
+type CreateUserAccountModel {
+  message: String!
+}
+
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
@@ -55,6 +59,7 @@ input DispatcherOrdersInfoArgs {
 type Mutation {
   createOrder(createOrderData: Order!): OrderCreationModel!
   removeOrder(removeOrderData: RemoveOrderArgs!): RemoveOrderModel!
+  createUserAccount(CreateUserAccount: CreateUserAccountArgs!): CreateUserAccountModel!
 }
 
 input Order {
@@ -87,4 +92,12 @@ input RemoveOrderArgs {
   orderId: String!
   mainOrderData: MainOrderData!
   userId: String
+}
+
+input CreateUserAccountArgs {
+  idUser: String!
+  userName: String!
+  userNumberPhone: String!
+  userLogin: String!
+  userPassword: String!
 }
