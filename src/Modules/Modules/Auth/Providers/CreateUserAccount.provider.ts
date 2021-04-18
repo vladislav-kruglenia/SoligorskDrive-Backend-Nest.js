@@ -18,6 +18,7 @@ export class CreateUserAccountProvider {
 
   async createUserAccount(dto:CreateUserAccountArgs): Promise<CreateUserAccountModel>{
     const {userLogin, userPassword} = dto;
+
     await this._checkUserLogin(userLogin);
     const hashPassword = await this.password.hashUserPassword(userPassword);
 
@@ -31,8 +32,7 @@ export class CreateUserAccountProvider {
 
 
   private async _checkUserLogin(userLogin: string){
-    const isUser = await this.usersSearch.getUserByLogin(userLogin);
-    if(isUser) throw new HttpException('A user with this login already exists', HttpStatus.CONFLICT);
+    const isUser = await this.usersSearch.findUserByLogin(userLogin);
+    if (isUser) throw new HttpException('A user with this login already exists', HttpStatus.CONFLICT);
   }
-
 }

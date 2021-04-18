@@ -21,13 +21,11 @@ export class UsersSearchService {
     }
   }
 
-  async getUserByLogin(userLogin: string): PromiseUser {
+  async findUserByLogin(userLogin: string): Promise<UserSchemaDocument> {
     try {
       return this.userModel.findOne({ userLogin });
-
     } catch (e) {
       console.log(e);
-      // throw new HttpException('Failed to find user document.', HttpStatus.NOT_FOUND);
     }
   }
 

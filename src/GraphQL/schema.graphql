@@ -39,6 +39,10 @@ type CreateUserAccountModel {
   message: String!
 }
 
+type LoginModel {
+  isAuth: Boolean!
+}
+
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
@@ -59,7 +63,9 @@ input DispatcherOrdersInfoArgs {
 type Mutation {
   createOrder(createOrderData: Order!): OrderCreationModel!
   removeOrder(removeOrderData: RemoveOrderArgs!): RemoveOrderModel!
-  createUserAccount(CreateUserAccount: CreateUserAccountArgs!): CreateUserAccountModel!
+  createUserAccount(createUserAccount: CreateUserAccountArgs!): CreateUserAccountModel!
+  login(loginData: LoginArgs!): LoginModel!
+  logout: LoginModel!
 }
 
 input Order {
@@ -98,6 +104,11 @@ input CreateUserAccountArgs {
   idUser: String!
   userName: String!
   userNumberPhone: String!
+  userLogin: String!
+  userPassword: String!
+}
+
+input LoginArgs {
   userLogin: String!
   userPassword: String!
 }

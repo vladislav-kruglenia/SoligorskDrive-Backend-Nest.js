@@ -6,20 +6,27 @@ import { GeneralActionsModule } from './Modules/Modules/GeneralActions/GeneralAc
 import { ClientAccountModule } from './Modules/Modules/ClientAccount/ClientAccount.module';
 import { DispatcherAccountModule } from './Modules/Modules/DispatcherAccount/DispatcherAccount.module';
 import { AuthModule } from './Modules/Modules/Auth/Auth.module';
+import { ConfigModule } from '@nestjs/config';
+
 
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      // envFilePath: '.env',
+      isGlobal: true,
+    }),
+    GraphQLModule.forRoot({
+      installSubscriptionHandlers: true,
+      autoSchemaFile: 'src/GraphQL/schema.graphql',
+      context: ({ req, res }) => ({ req, res })
+    }),
+    MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_NAME}:${process.env.DATABASE_PASSWORD}@cluster1.kbvhs.mongodb.net/soligorsk_drive?retryWrites=true&w=majority`),
     CommonQueryModule,
     GeneralActionsModule,
     ClientAccountModule,
     DispatcherAccountModule,
     AuthModule,
-    GraphQLModule.forRoot({
-      installSubscriptionHandlers: true,
-      autoSchemaFile: 'src/GraphQL/schema.graphql'
-    }),
-    MongooseModule.forRoot('mongodb+srv://AntonyPetrovich:n2OQdnOOeleqi0L5@cluster1.kbvhs.mongodb.net/soligorsk_drive?retryWrites=true&w=majority'),
   ]
 })
 export class AppModule {}
