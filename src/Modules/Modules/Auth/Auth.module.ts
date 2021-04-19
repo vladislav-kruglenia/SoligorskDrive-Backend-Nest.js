@@ -7,6 +7,7 @@ import { PasswordProvider } from './Providers/Password.provider';
 import { LoginProvider } from './Providers/Login.provider';
 import { JwtModule } from '@nestjs/jwt';
 import { TokensProvider } from './Providers/Tokens/Tokens.provider';
+import { AuthCookiesProvider } from './Providers/AuthCookies/AuthCookies.provider';
 
 const key = process.env.JWT_SECRET_KEY;
 console.log('key: ' + key);
@@ -19,8 +20,14 @@ console.log('key: ' + key);
       // signOptions: { expiresIn: '3600s' },
     }),
   ],
-  providers: [AuthProvider, AuthResolver, CreateUserAccountProvider, PasswordProvider, LoginProvider, TokensProvider],
-  exports: [AuthResolver],
+  providers: [
+    AuthProvider, AuthResolver, CreateUserAccountProvider,
+    PasswordProvider, LoginProvider, TokensProvider,
+    AuthCookiesProvider
+  ],
+  exports: [
+    AuthResolver, AuthCookiesProvider, TokensProvider
+  ],
 })
 export class AuthModule {
 }

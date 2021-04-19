@@ -5,8 +5,9 @@ import { UsersSearchService } from '../../../DAL/UsersService/Services/UsersSear
 import { PasswordProvider } from './Password.provider';
 import { TokensProvider } from './Tokens/Tokens.provider';
 import { UserSchemaDocument } from '../../../DAL/UsersService/Users.sсhema';
-import { GetTokens, GetTokensDTO } from './Tokens/Tokens.types';
+import { GetTokens, TokenUserDTO } from './Tokens/Tokens.types';
 import { Response } from 'express';
+import { AuthCookiesProvider } from './AuthCookies/AuthCookies.provider';
 
 @Injectable()
 export class LoginProvider {
@@ -14,6 +15,7 @@ export class LoginProvider {
     private usersSearch: UsersSearchService,
     private password: PasswordProvider,
     private tokensProvider: TokensProvider,
+    private authCookies: AuthCookiesProvider,
   ){}
 
   async login(dto: LoginArgs, res: Response): Promise<LoginModel>{
@@ -23,7 +25,7 @@ export class LoginProvider {
 
     const tokens: GetTokens = await this._generateTokens(user);
 
-    await this._updateTokensInCookies(tokens, res);
+    await this.authCookies.updateTokensInCookies(tokens, res);
 
     return {isAuth: true}
   }
@@ -31,7 +33,7 @@ export class LoginProvider {
   logout(res: Response): LoginModel{
     const tokens: GetTokens = {refreshToken:'', accessToken:''};
 
-    this._updateTokensInCookies(tokens, res);
+    this.authCookies.updateTokensInCookies(tokens, res);
 
     return {isAuth: false}
   }
@@ -48,17 +50,12 @@ export class LoginProvider {
   }
 
   private async _generateTokens(user: UserSchemaDocument): Promise<GetTokens>{
-    const {idUser, userLogin} = user;
-    const getTokensDTO: GetTokensDTO = {userId: idUser, login: userLogin};
+    const {idUser, userLogin, userRole} = user;
+    const getTokensDTO: TokenUserDTO = {userId: idUser, login: userLogin, userRole};
 
     return this.tokensProvider.getTokens(getTokensDTO)
   }
 
-  private _updateTokensInCookies(tokens: GetTokens, res: Response){
-    const {accessToken, refreshToken} = tokens;
 
-    res.cookie('accessToken', `${accessToken}`);
-    res.cookie('refreshToken', `${refreshToken}`);
-  }
 
 }

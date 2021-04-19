@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { RolesEnum } from '../../../AppGlobal/AppGlobalDecorators/Roles/Roles.types';
 
 @Schema()
 export class User {
@@ -17,6 +18,9 @@ export class User {
 
   @Prop({required: true})
   userPassword: string;
+
+  @Prop({required: true})
+  userRole: RolesEnum;
 
   @Prop({required: true})
   currentOrders: string[];

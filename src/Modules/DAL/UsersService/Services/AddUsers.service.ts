@@ -24,13 +24,14 @@ export class AddUsersService {
 
   private _getNewUserDocument(addUserServiceDTO: AddUsersServiceDTO): UserSchemaDocument{
     const newUser = new this.userModel();
-    const {idUser, userLogin, userName, userNumberPhone, userPassword} = addUserServiceDTO;
+    const {idUser, userLogin, userName, userNumberPhone, userPassword, userRole} = addUserServiceDTO;
 
-    newUser.idUser = idUser;
     newUser.userLogin = userLogin;
-    newUser.userName = userName;
     newUser.userPassword = userPassword;
+    newUser.idUser = idUser;
     newUser.userNumberPhone = userNumberPhone;
+    newUser.userName = userName;
+    newUser.userRole = userRole;
 
     return newUser
 

@@ -5,6 +5,7 @@ import { AddUsersService } from '../../../DAL/UsersService/Services/AddUsers.ser
 import { PasswordProvider } from './Password.provider';
 import { UsersSearchService } from '../../../DAL/UsersService/Services/UsersSearch.service';
 import { AddUsersServiceDTO } from '../../../DAL/UsersService/Services/Types/AddUsersService.types';
+import { RolesEnum } from '../../../../AppGlobal/AppGlobalDecorators/Roles/Roles.types';
 
 @Injectable()
 export class CreateUserAccountProvider {
@@ -22,7 +23,7 @@ export class CreateUserAccountProvider {
     await this._checkUserLogin(userLogin);
     const hashPassword = await this.password.hashUserPassword(userPassword);
 
-    const addNewUserDTO: AddUsersServiceDTO = {...dto, userPassword: hashPassword};
+    const addNewUserDTO: AddUsersServiceDTO = {...dto, userPassword: hashPassword, userRole: RolesEnum.User};
     await this.addUsers.addUser(addNewUserDTO);
 
     return {

@@ -1,13 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { GetTokens, GetTokensDTO } from './Tokens.types';
+import { GetTokens, TokenUserDTO } from './Tokens.types';
 
 @Injectable()
 export class TokensProvider {
   constructor(private jwtService: JwtService) {
   }
 
-  getTokens(dto: GetTokensDTO): GetTokens {
+  getTokens(dto: TokenUserDTO): GetTokens {
     const {login, userId, userRole} = dto;
     const payload = { login, userId, userRole };
     return {
@@ -16,11 +16,11 @@ export class TokensProvider {
     };
   }
 
-  tokenVerify(refreshToken: string) {
+  tokenVerify<T extends object>(token: string, isNeedError: boolean = true): T {
     try {
-      return this.jwtService.verify(refreshToken);
+      return this.jwtService.verify<T>(token);
     } catch (e) {
-      return new HttpException(`${e}`, HttpStatus.BAD_REQUEST)
+      if(isNeedError) throw new UnauthorizedException({ isAuth: false, message: 'Token is not valid.' });
     }
   }
 }
