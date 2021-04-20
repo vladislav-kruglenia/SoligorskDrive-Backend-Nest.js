@@ -1,8 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class ClientPersonalDataModel {
-
+export class UpdateUserPersonalDataModel {
   @Field()
   userName: string;
 

@@ -26,7 +26,7 @@ console.log('key: ' + key);
     AuthCookiesProvider
   ],
   exports: [
-    AuthResolver, AuthCookiesProvider, TokensProvider
+    AuthResolver, AuthCookiesProvider, TokensProvider, PasswordProvider
   ],
 })
 export class AuthModule {

@@ -43,8 +43,7 @@ export class LoginProvider {
     const user = await this.usersSearch.findUserByLogin(userLogin);
     if (!user) throw new HttpException('A user with this login is not exists.', HttpStatus.CONFLICT);
 
-    const isPasswordsIdentical  = await this.password.comparePasswords(user.userPassword, userPassword);
-    if (!isPasswordsIdentical) throw new HttpException('Passwords is not identical.', HttpStatus.CONFLICT);
+    await this.password.comparePasswords(user.userPassword, userPassword);
 
     return user;
   }

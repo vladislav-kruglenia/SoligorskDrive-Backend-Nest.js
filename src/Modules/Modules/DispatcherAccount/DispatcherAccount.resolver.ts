@@ -7,14 +7,16 @@ import { RolesEnum } from '../../../AppGlobal/AppGlobalDecorators/Roles/Roles.ty
 import { UseGuards } from '@nestjs/common';
 import { AuthRolesGuard } from '../../../AppGlobal/AppGlobalGuards/Auth.guard';
 
+
+@Roles(RolesEnum.Admin)
+@UseGuards(AuthRolesGuard)
 @Resolver()
 export class DispatcherAccountResolver {
   constructor(
     private dispatcherAccount: DispatcherAccountProvider,
   ) {}
 
-  @Roles(RolesEnum.Admin)
-  @UseGuards(AuthRolesGuard)
+
   @Query(returns => [DispatcherOrdersModel])
   async DispatcherOrdersInfo(@Args('dispatcherOrdersInfoData') args: DispatcherOrdersInfoArgs): Promise<DispatcherOrdersModel[]> {
     return this.dispatcherAccount.getOrdersInfo(args);

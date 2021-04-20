@@ -22,6 +22,30 @@ type RemoveOrderModel {
   userId: String
 }
 
+type UserPersonalDataModel {
+  userName: String!
+  userNumberPhone: String!
+  userLogin: String!
+}
+
+type UpdateUserPersonalDataModel {
+  userName: String!
+  userNumberPhone: String!
+  userLogin: String!
+}
+
+type UpdateUserPasswordModel {
+  isPasswordSaved: Boolean!
+}
+
+type CreateUserAccountModel {
+  message: String!
+}
+
+type LoginModel {
+  isAuth: Boolean!
+}
+
 type DispatcherOrderData {
   idOrder: String!
   direction: String!
@@ -35,17 +59,10 @@ type DispatcherOrdersModel {
   orders: [DispatcherOrderData!]!
 }
 
-type CreateUserAccountModel {
-  message: String!
-}
-
-type LoginModel {
-  isAuth: Boolean!
-}
-
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
+  UserPersonalData: UserPersonalDataModel!
   DispatcherOrdersInfo(dispatcherOrdersInfoData: DispatcherOrdersInfoArgs!): [DispatcherOrdersModel!]!
 }
 
@@ -63,6 +80,8 @@ input DispatcherOrdersInfoArgs {
 type Mutation {
   createOrder(createOrderData: Order!): OrderCreationModel!
   removeOrder(removeOrderData: RemoveOrderArgs!): RemoveOrderModel!
+  updateUserPersonalData(newUserPersonalData: UpdateUserPersonalDataArgs!): UpdateUserPersonalDataModel!
+  updateUserPassword(updateUserPasswordData: UpdateUserPasswordArgs!): UpdateUserPasswordModel!
   createUserAccount(createUserAccount: CreateUserAccountArgs!): CreateUserAccountModel!
   login(loginData: LoginArgs!): LoginModel!
   logout: LoginModel!
@@ -98,6 +117,17 @@ input RemoveOrderArgs {
   orderId: String!
   mainOrderData: MainOrderData!
   userId: String
+}
+
+input UpdateUserPersonalDataArgs {
+  userName: String!
+  userNumberPhone: String!
+  userLogin: String!
+}
+
+input UpdateUserPasswordArgs {
+  oldPassword: String!
+  newPassword: String!
 }
 
 input CreateUserAccountArgs {
