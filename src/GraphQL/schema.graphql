@@ -59,11 +59,23 @@ type DispatcherOrdersModel {
   orders: [DispatcherOrderData!]!
 }
 
+type ClientCurrentOrdersModel {
+  direction: String!
+  haltName: String!
+  haltTime: String!
+  orderPrice: Float!
+  numberSeats: Float!
+  date: String!
+  startHour: Float!
+}
+
 type Query {
   firstQuery: FirstQueryType!
   TravelInfo(travelInfoData: TravelInfoArgs!): [TravelInfoModel!]!
   UserPersonalData: UserPersonalDataModel!
   DispatcherOrdersInfo(dispatcherOrdersInfoData: DispatcherOrdersInfoArgs!): [DispatcherOrdersModel!]!
+  ClientCurrentOrders: [ClientCurrentOrdersModel!]!
+  ClientArchiveOrders: [ClientCurrentOrdersModel!]!
 }
 
 input TravelInfoArgs {

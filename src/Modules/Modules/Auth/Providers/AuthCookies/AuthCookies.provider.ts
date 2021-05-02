@@ -22,6 +22,7 @@ export class AuthCookiesProvider {
   private _getCookieParam<T = string>(data: T, request: Request): string {
     // return data ? request.cookies?.[data] : request.cookies;
     const token = request.cookies?.[data];
+    console.log(token);
 
     if(!token) throw new UnauthorizedException({ isAuth: false, message: 'Token is non found in cookies' });
 

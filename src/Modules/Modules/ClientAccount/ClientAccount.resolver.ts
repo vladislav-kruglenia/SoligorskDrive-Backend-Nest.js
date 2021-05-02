@@ -1,38 +1,21 @@
-import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { ClientAccountProvider } from './ClientAccount.provider';
+import { Context, Query, Resolver } from '@nestjs/graphql';
 import { Request } from 'express';
-import { UserPersonalDataModel } from './Types/UserPersonalData/UserPersonalData.model';
-import { UpdateUserPersonalDataArgs } from './Types/UpdateUserPersonalData/UpdateUserPersonalData.args';
-import { UpdateUserPersonalDataModel } from './Types/UpdateUserPersonalData/UpdateUserPersonalData.model';
-import { UpdateUserPasswordArgs } from './Types/UpdateUserPassword/UpdateUserPassword.args';
-import { UpdateUserPasswordModel } from './Types/UpdateUserPassword/UpdateUserPassword.model';
+import { ClientCurrentOrdersModel } from './Types/ClientCurrentOrders/ClientCurrentOrders.model';
+import { ClientAccountProvider } from './ClientAccount.provider';
 
 @Resolver()
 export class ClientAccountResolver {
   constructor(
-    private clientAccountProvider: ClientAccountProvider
-  ){}
+    private clientAccount: ClientAccountProvider,
+  ) {}
 
-  @Query(returns => UserPersonalDataModel)
-  async UserPersonalData(@Context('req') req: Request): Promise<UserPersonalDataModel>{
-    return this.clientAccountProvider.getUserData(req);
+  @Query(returns => [ClientCurrentOrdersModel])
+  async ClientCurrentOrders(@Context('req') req: Request): Promise<ClientCurrentOrdersModel[]> {
+    return this.clientAccount.getCurrentOrders(req);
   }
 
-  @Mutation(returns => UpdateUserPersonalDataModel)
-  async updateUserPersonalData(
-    @Args('newUserPersonalData') args: UpdateUserPersonalDataArgs,
-    @Context('req') req: Request,
-  ): Promise<UpdateUserPersonalDataModel>{
-
-    return this.clientAccountProvider.updateUserData(args, req);
-  }
-
-  @Mutation(returns => UpdateUserPasswordModel)
-  async updateUserPassword(
-    @Args('updateUserPasswordData') args: UpdateUserPasswordArgs,
-    @Context('req') req: Request,
-  ): Promise<UpdateUserPasswordModel>{
-
-    return this.clientAccountProvider.updateUserPassword(args, req);
+  @Query(returns => [ClientCurrentOrdersModel])
+  async ClientArchiveOrders(@Context('req') req: Request): Promise<ClientCurrentOrdersModel[]> {
+    return this.clientAccount.getArchiveOrders(req);
   }
 }

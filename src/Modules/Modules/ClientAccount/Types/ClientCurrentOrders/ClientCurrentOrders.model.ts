@@ -4,9 +4,6 @@ import { Field, ObjectType } from '@nestjs/graphql';
 export class ClientCurrentOrdersModel {
 
   @Field()
-  orderId: string;
-
-  @Field()
   direction: string;
 
   @Field()

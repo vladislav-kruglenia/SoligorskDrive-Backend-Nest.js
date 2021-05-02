@@ -6,15 +6,15 @@ import {
 } from '../../Types/DispatcherOrdersInfo/DispatcherCurrentOrders.model';
 import { GetCurrentOrderService } from '../../../../DAL/CurrentOrdersService/Services/GetCurrentOrder.service';
 import { MainOrderDataSearch } from '../../../../../AppGlobal/AppGlobalTypes/Types';
-import { OrdersService } from '../../../../DAL/OrdersService/Orders.service';
 import { OrderSchemaDocument } from '../../../../DAL/OrdersService/Orders.sсhema';
 import { GetDispatcherOrdersModelDTO, GetReturnObjectDTO } from './GetOrdersInfo.types';
+import { GetOrderArrayProvider } from '../../../../../AppGlobal/AppGlobalModules/GetOrderArray/GetOrderArray.provider';
 
 @Injectable()
 export class GetOrdersInfoProvider {
   constructor(
     private getCurrentOrders: GetCurrentOrderService,
-    private orders: OrdersService,
+    private getOrderArray: GetOrderArrayProvider,
   ) {
   }
 
@@ -81,15 +81,18 @@ export class GetOrdersInfoProvider {
 
     return Promise.all(ordersIdArr.map(async (orderIdArr: string[]): Promise<OrderSchemaDocument[]> => {
 
-      return Promise.all(orderIdArr.map(async (id: string): Promise<OrderSchemaDocument> => {
-        return this._getOrder(id);
-      }));
-
+      return this.getOrderArray.getOrderArray(orderIdArr)
     }));
 
+  }
+  
+  /*private async _getOrderArray(orderIdArr: string[]){
+    return Promise.all(orderIdArr.map(async (id: string): Promise<OrderSchemaDocument> => {
+      return this._getOrder(id);
+    }));
   }
 
   private async _getOrder(orderId: string): Promise<OrderSchemaDocument> {
     return this.orders.getOrderById(orderId);
-  }
+  }*/
 }

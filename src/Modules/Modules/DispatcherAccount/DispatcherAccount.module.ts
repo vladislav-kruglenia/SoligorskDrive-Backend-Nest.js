@@ -5,9 +5,10 @@ import { GetOrdersInfoProvider } from './Providers/GetOrdersInfo/GetOrdersInfo.p
 import { CurrentOrdersModule } from '../../DAL/CurrentOrdersService/CurrentOrders.module';
 import { OrdersServiceModule } from '../../DAL/OrdersService/Orders.module';
 import { AuthModule } from '../Auth/Auth.module';
+import { GetOrderArrayModule } from '../../../AppGlobal/AppGlobalModules/GetOrderArray/GetOrderArray.module';
 
 @Module({
-  imports: [CurrentOrdersModule, OrdersServiceModule, AuthModule],
+  imports: [CurrentOrdersModule, OrdersServiceModule, AuthModule, GetOrderArrayModule],
   providers: [DispatcherAccountResolver, DispatcherAccountProvider, GetOrdersInfoProvider],
   exports: [DispatcherAccountResolver]
 })

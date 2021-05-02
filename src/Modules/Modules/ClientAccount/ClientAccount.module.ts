@@ -1,17 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ClientAccountResolver } from './ClientAccount.resolver';
 import { ClientAccountProvider } from './ClientAccount.provider';
-import { UserPersonalDataProvider } from './Providers/UserPersonalData/UserPersonalData.provider';
-import { AuthModule } from '../Auth/Auth.module';
+import { ExtractTokenDataModule } from '../../../AppGlobal/AppGlobalModules/ExtractTokenData/ExtractTokenData.module';
+import { CurrentOrdersProvider } from './Providers/CurrentOrders/CurrentOrders.provider';
 import { UsersModule } from '../../DAL/UsersService/Users.module';
-import { UpdateUserPasswordProvider } from './Providers/UpdateUserPassword/UpdateUserPassword.provider';
+import { GetOrderArrayModule } from '../../../AppGlobal/AppGlobalModules/GetOrderArray/GetOrderArray.module';
+import { ArchiveOrdersProvider } from './Providers/ArchiveOrders/ArchiveOrders.provider';
 
 @Module({
-  imports: [AuthModule, UsersModule],
-  providers: [
-    ClientAccountResolver, ClientAccountProvider, UserPersonalDataProvider,
-    UpdateUserPasswordProvider
-  ],
+  imports: [ExtractTokenDataModule, UsersModule, GetOrderArrayModule],
+  providers: [ClientAccountResolver, ClientAccountProvider, CurrentOrdersProvider, ArchiveOrdersProvider],
   exports: [ClientAccountResolver],
 })
 export class ClientAccountModule {
