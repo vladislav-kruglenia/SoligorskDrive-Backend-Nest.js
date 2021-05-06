@@ -1,18 +1,37 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { MainOrderData } from '../../../AppGlobal/AppGlobalTypes/GlobalShemes';
+
+@Schema()
+export class MainOrderData {
+  @Prop({ required: true })
+  direction: string;
+
+  @Prop({ required: true })
+  date: string;
+}
+
+@Schema()
+export class DayData {
+  @Prop({ required: true })
+  startHour: number;
+
+  @Prop({ required: true })
+  numberFreeSeats: number;
+
+}
 
 @Schema()
 export class Free_Seat {
-  @Prop({required: true})
+  @Prop()
   mainOrderData: MainOrderData;
 
-  @Prop()
-  numberFreeSeats: number;
+  @Prop({ required: true })
+  priceSeat: number;
 
   @Prop()
-  priceSeat: number;
+  dayDataArr: DayData[];
 }
+
 export type FreeSeatSchemaDocument = Free_Seat & Document;
 
 

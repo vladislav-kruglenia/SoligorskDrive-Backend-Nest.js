@@ -1,10 +1,10 @@
-import { MainOrderData } from '../../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
+import { MainOrderData } from '../../FreeSeats.sсhema';
+
 
 export interface GetOneFreeSeatsDTO extends MainOrderData {
 
 }
 
-export type GetFreeSeatsDTO = {
-  direction: string,
-  date: string,
+export interface GetFreeSeatsDTO extends MainOrderData{
+
 }

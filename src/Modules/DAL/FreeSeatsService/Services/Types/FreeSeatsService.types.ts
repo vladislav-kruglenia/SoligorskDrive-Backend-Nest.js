@@ -1,5 +1,4 @@
-import { MainOrderData } from '../../../../../AppGlobal/AppGlobalTypes/GlobalShemes';
-import { FreeSeatSchemaDocument } from '../../FreeSeats.sсhema';
+import { FreeSeatSchemaDocument, MainOrderData } from '../../FreeSeats.sсhema';
 
 export interface AddFreeSeatDTO extends MainOrderData {
 }
@@ -10,6 +9,7 @@ export interface DeleteFreeSeatDTO {
 
 export type EditNumberFreeSeatsDTO = {
   numberSeat: number,
+  startHour: number,
   documentFreeSeat: FreeSeatSchemaDocument,
 }
 

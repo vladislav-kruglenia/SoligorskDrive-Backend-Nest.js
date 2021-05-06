@@ -8,11 +8,12 @@ import { EditCurrentOrdersArrDTO } from '../../../DAL/CurrentOrdersService/Servi
 import { EditIdArrTypeEnum } from '../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 import { MainOrderData } from '../Types/OrderCreation/OrderCreation.args';
 import { FreeSeatsSearchService } from '../../../DAL/FreeSeatsService/Services/FreeSeatsSearch.service';
-import { FreeSeatsService } from '../../../DAL/FreeSeatsService/Services/FreeSeats.service';
+import { FreeSeatsService } from '../../../DAL/FreeSeatsService/FreeSeats.service';
 import { EditNumberFreeSeatsDTO } from '../../../DAL/FreeSeatsService/Services/Types/FreeSeatsService.types';
 import { EditUserOrderIndexDTO } from '../../../DAL/UsersService/Services/Types/UsersEditOrdersArrService.types';
 import { UsersSearchService } from '../../../DAL/UsersService/Services/UsersSearch.service';
 import { UsersEditOrdersArrService } from '../../../DAL/UsersService/Services/UsersEditOrdersArr.service';
+import { EditNumberFreeSeatsService } from '../../../DAL/FreeSeatsService/Services/EditNumberFreeSeats.service';
 
 @Injectable()
 export class RemoveOrderProvider {
@@ -23,6 +24,7 @@ export class RemoveOrderProvider {
     private currentOrders: CurrentOrdersService,
     private freeSeatsSearch: FreeSeatsSearchService,
     private freeSeats: FreeSeatsService,
+    private editNumberFreeSeats: EditNumberFreeSeatsService,
     private usersSearch: UsersSearchService,
     private usersEditOrdersArr: UsersEditOrdersArrService,
   ) {
@@ -59,14 +61,16 @@ export class RemoveOrderProvider {
 
 
   private async _removeFromFreeSeats(mainOrderData: MainOrderData) {
-    const documentFreeSeat = await this.freeSeatsSearch.getOneFreeSeats(mainOrderData);
+    const {startHour, date, direction, } = mainOrderData;
+    const documentFreeSeat = await this.freeSeatsSearch.getOneFreeSeatsDocument({date, direction});
 
     const dto: EditNumberFreeSeatsDTO = {
       numberSeat: -1,
+      startHour: startHour,
       documentFreeSeat
     };
 
-    await this.freeSeats.editNumberFreeSeats(dto)
+    await this.editNumberFreeSeats.editNumberFreeSeats(dto)
   }
 
   private async _removeFromUsers(orderId: string, userId: string) {
