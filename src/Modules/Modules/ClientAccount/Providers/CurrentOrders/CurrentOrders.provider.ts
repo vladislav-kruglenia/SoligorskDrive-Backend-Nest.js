@@ -23,10 +23,11 @@ export class CurrentOrdersProvider {
   private _getClientCurrentOrdersModelArr(ordersArr: OrderSchemaDocument[]): ClientCurrentOrdersModel[]{
     return ordersArr.map<ClientCurrentOrdersModel>((order: OrderSchemaDocument) => {
 
-      const {date, direction, startHour} = order.mainOrderData;
-      const {haltName, haltTime, numberSeatsOrdered, orderPrice} = order.secondaryOrderData;
+      const {orderId, mainOrderData, secondaryOrderData} = order;
+      const {date, direction, startHour} = mainOrderData;
+      const {haltName, haltTime, numberSeatsOrdered, orderPrice} = secondaryOrderData;
 
-      return { date, direction, startHour, haltName, haltTime,  orderPrice, numberSeats: numberSeatsOrdered}
+      return { orderId, date, direction, startHour, haltName, haltTime,  orderPrice, numberSeats: numberSeatsOrdered}
     })
   }
 

@@ -8,6 +8,7 @@ import { UserSchemaDocument } from '../../../DAL/UsersService/Users.sсhema';
 import { GetTokens, TokenUserDTO } from './Tokens/Tokens.types';
 import { Response } from 'express';
 import { AuthCookiesProvider } from './AuthCookies/AuthCookies.provider';
+import { RolesEnum } from '../../../../AppGlobal/AppGlobalDecorators/Roles/Roles.types';
 
 @Injectable()
 export class LoginProvider {
@@ -27,7 +28,7 @@ export class LoginProvider {
 
     await this.authCookies.updateTokensInCookies(tokens, res);
 
-    return {isAuth: true}
+    return {isAuth: true, userRole: user.userRole}
   }
   
   logout(res: Response): LoginModel{
@@ -35,7 +36,7 @@ export class LoginProvider {
 
     this.authCookies.updateTokensInCookies(tokens, res);
 
-    return {isAuth: false}
+    return {isAuth: false, userRole: RolesEnum.None}
   }
 
 

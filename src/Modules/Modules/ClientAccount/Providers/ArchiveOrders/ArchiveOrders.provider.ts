@@ -22,10 +22,11 @@ export class ArchiveOrdersProvider {
   private _getArchiveOrdersModel(archiveOrders:  OrderSchemaDocument[]): ClientCurrentOrdersModel[]{
     return archiveOrders.map<ClientCurrentOrdersModel>((order: OrderSchemaDocument) => {
 
-      const {date, direction, startHour} = order.mainOrderData;
-      const {haltName, haltTime, numberSeatsOrdered, orderPrice} = order.secondaryOrderData;
+      const {orderId, secondaryOrderData, mainOrderData} = order;
+      const {date, direction, startHour} = mainOrderData;
+      const {haltName, haltTime, numberSeatsOrdered, orderPrice} = secondaryOrderData;
 
-      return { date, direction, startHour, haltName, haltTime,  orderPrice, numberSeats: numberSeatsOrdered}
+      return { orderId, date, direction, startHour, haltName, haltTime,  orderPrice, numberSeats: numberSeatsOrdered}
     })
   }
 }

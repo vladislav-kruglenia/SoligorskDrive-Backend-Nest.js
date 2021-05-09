@@ -1,10 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { DirectionsEnum } from '../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 @Schema()
 export class MainOrderData {
   @Prop({ required: true })
-  direction: string;
+  direction: DirectionsEnum;
 
   @Prop({ required: true })
   date: string;

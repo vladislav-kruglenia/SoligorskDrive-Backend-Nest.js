@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { DirectionsEnum } from '../../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 @InputType()
 export class DispatcherOrdersInfoArgs {
@@ -8,6 +9,6 @@ export class DispatcherOrdersInfoArgs {
   @Field({nullable: true})
   startHour?: number;
 
-  @Field({nullable: true})
-  direction?: string;
+  @Field(type => DirectionsEnum,{nullable: true} )
+  direction?: DirectionsEnum;
 }

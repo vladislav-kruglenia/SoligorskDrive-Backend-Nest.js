@@ -1,4 +1,5 @@
 import { Field, InputType } from '@nestjs/graphql';
+import { DirectionsEnum } from '../../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 @InputType()
 export class ClientData {
@@ -30,8 +31,8 @@ export class SecondaryOrderData {
 
 @InputType()
 export class MainOrderData {
-  @Field()
-  direction: string;
+  @Field(type => DirectionsEnum)
+  direction: DirectionsEnum;
 
   @Field()
   date: string;

@@ -20,7 +20,11 @@ import { ClientAccountModule } from './Modules/Modules/ClientAccount/ClientAccou
     GraphQLModule.forRoot({
       installSubscriptionHandlers: true,
       autoSchemaFile: 'src/GraphQL/schema.graphql',
-      context: ({ req, res }) => ({ req, res })
+      context: ({ req, res }) => ({ req, res }),
+      cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+      },
     }),
     MongooseModule.forRoot(`mongodb+srv://${process.env.DATABASE_NAME}:${process.env.DATABASE_PASSWORD}@cluster1.kbvhs.mongodb.net/soligorsk_drive?retryWrites=true&w=majority`),
     CommonQueryModule,

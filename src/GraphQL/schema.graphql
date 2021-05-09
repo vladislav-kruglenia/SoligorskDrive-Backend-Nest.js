@@ -44,13 +44,26 @@ type CreateUserAccountModel {
 
 type LoginModel {
   isAuth: Boolean!
+  userRole: RolesEnum!
+}
+
+enum RolesEnum {
+  None
+  User
+  Admin
 }
 
 type DispatcherOrderData {
   idOrder: String!
-  direction: String!
+  direction: DirectionsEnum!
   clientName: String!
   clientPhone: String!
+}
+
+enum DirectionsEnum {
+  none
+  toMinsk
+  toSoligorsk
 }
 
 type DispatcherOrdersModel {
@@ -60,7 +73,8 @@ type DispatcherOrdersModel {
 }
 
 type ClientCurrentOrdersModel {
-  direction: String!
+  orderId: String!
+  direction: DirectionsEnum!
   haltName: String!
   haltTime: String!
   orderPrice: Float!
@@ -79,14 +93,14 @@ type Query {
 }
 
 input TravelInfoArgs {
-  direction: String!
+  direction: DirectionsEnum!
   date: String!
 }
 
 input DispatcherOrdersInfoArgs {
   date: String
   startHour: Float
-  direction: String
+  direction: DirectionsEnum
 }
 
 type Mutation {
@@ -94,7 +108,7 @@ type Mutation {
   removeOrder(removeOrderData: RemoveOrderArgs!): RemoveOrderModel!
   updateUserPersonalData(newUserPersonalData: UpdateUserPersonalDataArgs!): UpdateUserPersonalDataModel!
   updateUserPassword(updateUserPasswordData: UpdateUserPasswordArgs!): UpdateUserPasswordModel!
-  createUserAccount(createUserAccount: CreateUserAccountArgs!): CreateUserAccountModel!
+  createUserAccount(createUserAccountData: CreateUserAccountArgs!): CreateUserAccountModel!
   login(loginData: LoginArgs!): LoginModel!
   logout: LoginModel!
 }
@@ -114,7 +128,7 @@ input SecondaryOrderData {
 }
 
 input MainOrderData {
-  direction: String!
+  direction: DirectionsEnum!
   date: String!
   startHour: Float!
 }

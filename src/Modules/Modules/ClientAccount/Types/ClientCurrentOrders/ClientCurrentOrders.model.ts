@@ -1,10 +1,13 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { DirectionsEnum } from '../../../../../AppGlobal/AppGlobalTypes/GlobalEnums';
 
 @ObjectType()
 export class ClientCurrentOrdersModel {
-
   @Field()
-  direction: string;
+  orderId: string;
+
+  @Field(type => DirectionsEnum)
+  direction: DirectionsEnum;
 
   @Field()
   haltName: string;

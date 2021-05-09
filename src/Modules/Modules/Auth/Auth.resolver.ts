@@ -15,7 +15,7 @@ export class AuthResolver {
 
   @Mutation(returns => CreateUserAccountModel)
   async createUserAccount(
-    @Args('createUserAccount') args: CreateUserAccountArgs): Promise<CreateUserAccountModel> {
+    @Args('createUserAccountData') args: CreateUserAccountArgs): Promise<CreateUserAccountModel> {
     return this.auth.createUserAccount(args);
   }
 
