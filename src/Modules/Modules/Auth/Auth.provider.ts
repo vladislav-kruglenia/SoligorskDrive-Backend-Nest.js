@@ -14,7 +14,6 @@ export class AuthProvider {
     private loginProvider: LoginProvider,
   ){}
 
-
   async createUserAccount(dto:CreateUserAccountArgs): Promise<CreateUserAccountModel>{
     return this.createAccount.createUserAccount(dto)
   }
@@ -26,6 +25,8 @@ export class AuthProvider {
   logout(res: Response): LoginModel {
     return this.loginProvider.logout(res);
   }
+
+
 
 
 }

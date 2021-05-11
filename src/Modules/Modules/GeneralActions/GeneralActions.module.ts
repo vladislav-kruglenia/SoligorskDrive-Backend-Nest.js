@@ -9,14 +9,24 @@ import { FreeSeatsModule } from '../../DAL/FreeSeatsService/FreeSeats.module';
 import { GetTravelsInfoProvider } from './Providers/GetTravelsInfo.provider';
 import { RemoveOrderProvider } from './Providers/RemoveOrder.provider';
 import { CheckDateModule } from '../../../AppGlobal/AppGlobalModules/CheckDate/CheckDate.module';
+import { ExtractTokenDataModule } from '../../../AppGlobal/AppGlobalModules/ExtractTokenData/ExtractTokenData.module';
+import { AuthModule } from '../Auth/Auth.module';
 
 @Module({
-  exports: [GeneralActionsResolver],
-  imports: [OrdersServiceModule, CurrentOrdersModule, UsersModule, FreeSeatsModule, CheckDateModule],
+  imports: [
+    OrdersServiceModule,
+    CurrentOrdersModule,
+    UsersModule,
+    FreeSeatsModule,
+    CheckDateModule,
+    ExtractTokenDataModule,
+    AuthModule,
+  ],
   providers: [
     GeneralActionsProvider, OrderCreationProvider, GeneralActionsResolver,
     GetTravelsInfoProvider, RemoveOrderProvider
-  ]
+  ],
+  exports: [GeneralActionsResolver]
 })
 export class GeneralActionsModule {
 }

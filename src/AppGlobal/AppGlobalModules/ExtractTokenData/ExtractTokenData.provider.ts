@@ -3,6 +3,7 @@ import { Request } from 'express';
 import { TokenUserDTO } from '../../../Modules/Modules/Auth/Providers/Tokens/Tokens.types';
 import { AuthCookiesProvider } from '../../../Modules/Modules/Auth/Providers/AuthCookies/AuthCookies.provider';
 import { TokensProvider } from '../../../Modules/Modules/Auth/Providers/Tokens/Tokens.provider';
+import { GetUserData } from './ExtractTokenDataProvider.types';
 
 @Injectable()
 export class ExtractTokenDataProvider {
@@ -17,5 +18,12 @@ export class ExtractTokenDataProvider {
     const { userId } = this.tokensProvider.tokenVerify<TokenUserDTO>(accessToken);
 
     return userId;
+  }
+
+  getUserData(req: Request): GetUserData{
+    const { accessToken } = this.authCookies.getTokensCookie(req);
+    const { userId, userRole } = this.tokensProvider.tokenVerify<TokenUserDTO>(accessToken);
+
+    return { userId, userRole };
   }
 }

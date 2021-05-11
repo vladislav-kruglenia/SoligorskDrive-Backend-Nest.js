@@ -28,7 +28,7 @@ export class LoginProvider {
 
     await this.authCookies.updateTokensInCookies(tokens, res);
 
-    return {isAuth: true, userRole: user.userRole}
+    return {isAuth: true, userRole: user.userRole, userId: user.idUser}
   }
   
   logout(res: Response): LoginModel{
@@ -55,7 +55,4 @@ export class LoginProvider {
 
     return this.tokensProvider.getTokens(getTokensDTO)
   }
-
-
-
 }

@@ -8,4 +8,7 @@ export class LoginModel {
 
   @Field(type => RolesEnum)
   userRole: RolesEnum;
+
+  @Field()
+  userId?: string;
 }
