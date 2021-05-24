@@ -31,7 +31,9 @@ export class RemoveOrderProvider {
   }
 
   async removeOrder(dto: RemoveOrderArgs): Promise<RemoveOrderModel> {
-    const { orderId, mainOrderData, userId } = dto;
+    const { orderId, mainOrderData } = dto;
+    const order = await this.orders.getOrderById(orderId);
+    const userId = order.clientData.clientId;
 
     await this._removeFromCurrentOrders(orderId, mainOrderData);
     await this._removeFromFreeSeats(mainOrderData);

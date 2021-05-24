@@ -8,5 +8,6 @@ export interface GetTokens {
 export type TokenUserDTO = {
   userId: string,
   login: string,
+  userName: string,
   userRole: RolesEnum,
 }

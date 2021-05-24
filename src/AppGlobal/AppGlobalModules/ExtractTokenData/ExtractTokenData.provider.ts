@@ -22,8 +22,8 @@ export class ExtractTokenDataProvider {
 
   getUserData(req: Request): GetUserData{
     const { accessToken } = this.authCookies.getTokensCookie(req);
-    const { userId, userRole } = this.tokensProvider.tokenVerify<TokenUserDTO>(accessToken);
+    const { userId, userRole, userName } = this.tokensProvider.tokenVerify<TokenUserDTO>(accessToken);
 
-    return { userId, userRole };
+    return { userId, userRole, userName };
   }
 }

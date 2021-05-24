@@ -35,8 +35,8 @@ export class GeneralActionsProvider {
   }
 
   isAuth(req: Request): LoginModel{
-    const {userId, userRole} = this.extractTokenData.getUserData(req);
-    return {isAuth: true, userId, userRole}
+    const {userId, userRole, userName} = this.extractTokenData.getUserData(req);
+    return {isAuth: true, userId, userRole, userName}
   }
 
 

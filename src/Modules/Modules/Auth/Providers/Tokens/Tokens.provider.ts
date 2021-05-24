@@ -8,8 +8,8 @@ export class TokensProvider {
   }
 
   getTokens(dto: TokenUserDTO): GetTokens {
-    const {login, userId, userRole} = dto;
-    const payload = { login, userId, userRole };
+    const {login, userId, userRole, userName} = dto;
+    const payload = { login, userId, userRole, userName };
     return {
       accessToken: this.jwtService.sign(payload, { expiresIn: '6h' }),
       refreshToken: this.jwtService.sign({...payload, type: 'refresh'}, { expiresIn: '24h' }),

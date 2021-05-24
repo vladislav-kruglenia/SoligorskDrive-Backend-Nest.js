@@ -21,14 +21,13 @@ export class LoginProvider {
 
   async login(dto: LoginArgs, res: Response): Promise<LoginModel>{
     const {userLogin, userPassword} = dto;
-
     const user = await this._checkUserData(userLogin, userPassword);
-
     const tokens: GetTokens = await this._generateTokens(user);
+    const {userRole, userName} = user;
 
     await this.authCookies.updateTokensInCookies(tokens, res);
 
-    return {isAuth: true, userRole: user.userRole, userId: user.idUser}
+    return {isAuth: true, userId: user.idUser, userRole, userName}
   }
   
   logout(res: Response): LoginModel{
@@ -50,8 +49,8 @@ export class LoginProvider {
   }
 
   private async _generateTokens(user: UserSchemaDocument): Promise<GetTokens>{
-    const {idUser, userLogin, userRole} = user;
-    const getTokensDTO: TokenUserDTO = {userId: idUser, login: userLogin, userRole};
+    const {idUser, userLogin, userRole, userName} = user;
+    const getTokensDTO: TokenUserDTO = {userId: idUser, login: userLogin, userRole, userName};
 
     return this.tokensProvider.getTokens(getTokensDTO)
   }

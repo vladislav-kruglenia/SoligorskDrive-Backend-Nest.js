@@ -11,4 +11,7 @@ export class LoginModel {
 
   @Field()
   userId?: string;
+
+  @Field()
+  userName?: string;
 }
