@@ -29,6 +29,9 @@ export class GeneralActionsResolver {
     return this.generalActions.createOrder(args);
   }
 
+
+  @Roles(RolesEnum.Admin, RolesEnum.User)
+  @UseGuards(AuthRolesGuard)
   @Mutation(returns => RemoveOrderModel)
   async removeOrder(@Args('removeOrderData') args: RemoveOrderArgs): Promise<RemoveOrderModel> {
     return this.generalActions.removeOrder(args);

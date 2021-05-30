@@ -6,12 +6,19 @@ import { UpdateUserPersonalDataArgs } from './Types/UpdateUserPersonalData/Updat
 import { UpdateUserPersonalDataModel } from './Types/UpdateUserPersonalData/UpdateUserPersonalData.model';
 import { UpdateUserPasswordArgs } from './Types/UpdateUserPassword/UpdateUserPassword.args';
 import { UpdateUserPasswordModel } from './Types/UpdateUserPassword/UpdateUserPassword.model';
+import { Roles } from '../../../AppGlobal/AppGlobalDecorators/Roles/Roles.decorator';
+import { RolesEnum } from '../../../AppGlobal/AppGlobalDecorators/Roles/Roles.types';
+import { UseGuards } from '@nestjs/common';
+import { AuthRolesGuard } from '../../../AppGlobal/AppGlobalGuards/Auth.guard';
 
+@Roles(RolesEnum.Admin, RolesEnum.User)
+@UseGuards(AuthRolesGuard)
 @Resolver()
 export class GeneralAccountsSettingsResolver {
   constructor(
     private accountsSettings: GeneralAccountsSettingsProvider
   ){}
+
 
   @Query(returns => UserPersonalDataModel)
   async UserPersonalData(@Context('req') req: Request): Promise<UserPersonalDataModel>{
