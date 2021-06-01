@@ -25,19 +25,24 @@ export class UserPersonalDataProvider {
 
   async updateUserData(dto: UpdateUserPersonalDataArgs, userId: string): Promise<UpdateUserPersonalDataModel> {
     const userDocument = await this._getUserDocument(userId);
+    const newDto = await this._checkUserLogin(dto, userDocument.userLogin);
 
-    await this.userLogin.checkUserLogin(dto.userLogin);
-    await this._updateUserDocument(dto, userDocument);
+    await this._updateUserDocument(newDto, userDocument);
+    return {...newDto}
+  }
 
-    return {...dto} // если все хорошо, то возвращаем данные которые пришли с клиента
+  private async _getUserDocument(userId: string): Promise<UserSchemaDocument> {
+    return this.usersSearch.getUserById(userId);
+  }
+
+  private async _checkUserLogin(dto: UpdateUserPersonalDataArgs, oldUserLogin: string): Promise<UpdateUserPersonalDataArgs>{
+    const isLoginUnique = await this.userLogin.isLoginUnique(dto.userLogin);
+
+    return {...dto, userLogin: isLoginUnique ? dto.userLogin : oldUserLogin};
   }
 
   private async _updateUserDocument(dto: UpdateUserPersonalDataArgs, userDocument: UserSchemaDocument){
     const updateUserDTO: EditUserPersonalDataDTO = {...dto, userDocument};
     await this.usersEditData.editUserPersonalData(updateUserDTO);
-  }
-
-  private async _getUserDocument(userId: string): Promise<UserSchemaDocument> {
-    return this.usersSearch.getUserById(userId);
   }
 }
