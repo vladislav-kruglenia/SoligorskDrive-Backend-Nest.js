@@ -4,14 +4,19 @@ import { GetDateRes } from '../CheckDate.types';
 
 @Injectable()
 export class GetDateService {
-  getDate(): GetDateRes{
+  MoscowTimeZone = 'Europe/Moscow';
+
+  getDateString(): GetDateRes{
+    const MoscowDate = this.getMoscowDate();
+    const currentDate = format(MoscowDate, 'yyyy.MM.dd', { timeZone: this.MoscowTimeZone });
+    const currentHour = format(MoscowDate, 'HH', { timeZone: this.MoscowTimeZone });
+
+    return {currentDate: currentDate, currentHour: currentHour}
+  }
+
+  getMoscowDate(){
     const date = new Date();
-    const MoscowTimeZone = 'Europe/Moscow';
 
-    const MoscowDate = utcToZonedTime(date, MoscowTimeZone);
-    const currentDate = format(MoscowDate, 'yyyy.MM.dd', { timeZone: MoscowTimeZone });
-    const currentHour = format(MoscowDate, 'HH', { timeZone: MoscowTimeZone });
-
-    return {date: currentDate, hour: currentHour}
+    return utcToZonedTime(date, this.MoscowTimeZone);
   }
 }

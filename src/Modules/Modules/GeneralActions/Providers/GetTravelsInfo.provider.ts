@@ -19,7 +19,7 @@ export class GetTravelsInfoProvider {
 
     const arrTravelInfoModel = this._mapTravelInfoModel(freeSeatsDocument);
 
-    return this._checkHoursInTravelInfoModelArr(arrTravelInfoModel)
+    return this._checkHoursInTravelInfoModelArr(arrTravelInfoModel, getTravelsInfoDTO.date)
   }
 
   private async _getFreeSeatsDocument(getTravelsInfoDTO: TravelInfoArgs): Promise<FreeSeatSchemaDocument>{
@@ -49,9 +49,13 @@ export class GetTravelsInfoProvider {
     });
   }
 
-  private _checkHoursInTravelInfoModelArr(arr: TravelInfoModel[]): TravelInfoModel[]{
-    const {hour} = this.checkDate.getDate();
+  private _checkHoursInTravelInfoModelArr(arr: TravelInfoModel[], clientDate: string): TravelInfoModel[]{
+    const {currentDate, currentHour} = this.checkDate.getDate();
 
-    return arr.filter((model: TravelInfoModel) => model.startHourTravel > Number(hour) && model.remainingNumberSeats > 0)
+    arr = arr.filter((model: TravelInfoModel) => (model.remainingNumberSeats > 0));
+
+    if(clientDate > currentDate) return arr;
+
+    return arr.filter((model: TravelInfoModel) => (model.startHourTravel > Number(currentHour)))
   }
 }

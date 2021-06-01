@@ -9,7 +9,7 @@ export class CheckDateProvider {
   ){}
 
   getDate(): GetDateRes {
-    return this.getDateService.getDate()
+    return this.getDateService.getDateString()
   }
 }
 

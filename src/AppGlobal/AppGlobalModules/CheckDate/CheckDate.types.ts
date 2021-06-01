@@ -1,4 +1,4 @@
 export type GetDateRes = {
-  date: string,
-  hour: string,
+  currentDate: string,
+  currentHour: string,
 }

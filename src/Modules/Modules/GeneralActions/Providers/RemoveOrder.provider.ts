@@ -34,9 +34,10 @@ export class RemoveOrderProvider {
     const { orderId, mainOrderData } = dto;
     const order = await this.orders.getOrderById(orderId);
     const userId = order.clientData.clientId;
+    const {numberSeatsOrdered} = order.secondaryOrderData;
 
     await this._removeFromCurrentOrders(orderId, mainOrderData);
-    await this._removeFromFreeSeats(mainOrderData);
+    await this._removeFromFreeSeats(mainOrderData, numberSeatsOrdered);
     if(userId) await this._removeFromUsers(orderId, userId);
 
     await this._removeFromOrders(orderId);
@@ -62,12 +63,12 @@ export class RemoveOrderProvider {
   }
 
 
-  private async _removeFromFreeSeats(mainOrderData: MainOrderData) {
+  private async _removeFromFreeSeats(mainOrderData: MainOrderData, numberSeat: number) {
     const {startHour, date, direction, } = mainOrderData;
     const documentFreeSeat = await this.freeSeatsSearch.getOneFreeSeatsDocument({date, direction});
 
     const dto: EditNumberFreeSeatsDTO = {
-      numberSeat: -1,
+      numberSeat: -numberSeat,
       startHour: startHour,
       documentFreeSeat
     };

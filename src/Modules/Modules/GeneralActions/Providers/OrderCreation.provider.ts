@@ -49,9 +49,9 @@ export class OrderCreationProvider {
   }
 
   private _verifyDateAndHour(clientDate: string, clientHour: number){
-    const {hour, date} = this.checkDate.getDate();
+    const {currentHour, currentDate} = this.checkDate.getDate();
 
-    const isVerify = clientDate > date || (clientDate === date && clientHour > Number(hour));
+    const isVerify = clientDate > currentDate || (clientDate === currentDate && clientHour > Number(currentHour));
 
     if(!isVerify) throw new HttpException('Time or date order is not valid.', HttpStatus.NOT_ACCEPTABLE)
   }
