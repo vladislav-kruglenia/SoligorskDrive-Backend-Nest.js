@@ -8,6 +8,7 @@ import { LoginProvider } from './Providers/Login.provider';
 import { JwtModule } from '@nestjs/jwt';
 import { TokensProvider } from './Providers/Tokens/Tokens.provider';
 import { AuthCookiesProvider } from './Providers/AuthCookies/AuthCookies.provider';
+import { UserLoginModule } from '../../../AppGlobal/AppGlobalModules/UserLogin/UserLogin.module';
 
 const key = process.env.JWT_SECRET_KEY;
 console.log('key: ' + key);
@@ -15,6 +16,7 @@ console.log('key: ' + key);
 @Module({
   imports: [
     UsersModule,
+    UserLoginModule,
     JwtModule.register({
       secret: `${process.env.JWT_SECRET_KEY}` /*|| 'SECRET'*/,
       // signOptions: { expiresIn: '3600s' },

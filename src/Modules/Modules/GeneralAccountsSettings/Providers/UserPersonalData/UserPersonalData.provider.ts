@@ -6,12 +6,14 @@ import { UpdateUserPersonalDataModel } from '../../Types/UpdateUserPersonalData/
 import { UsersEditDataService } from '../../../../DAL/UsersService/Services/UsersEditData.service';
 import { UserSchemaDocument } from '../../../../DAL/UsersService/Users.sсhema';
 import { EditUserPersonalDataDTO } from '../../../../DAL/UsersService/Services/Types/UsersEditDataService.types';
+import { UserLoginProvider } from '../../../../../AppGlobal/AppGlobalModules/UserLogin/UserLogin.provider';
 
 @Injectable()
 export class UserPersonalDataProvider {
   constructor(
     private usersSearch: UsersSearchService,
     private usersEditData: UsersEditDataService,
+    private userLogin: UserLoginProvider,
   ) {
   }
 
@@ -23,6 +25,8 @@ export class UserPersonalDataProvider {
 
   async updateUserData(dto: UpdateUserPersonalDataArgs, userId: string): Promise<UpdateUserPersonalDataModel> {
     const userDocument = await this._getUserDocument(userId);
+
+    await this.userLogin.checkUserLogin(dto.userLogin);
     await this._updateUserDocument(dto, userDocument);
 
     return {...dto} // если все хорошо, то возвращаем данные которые пришли с клиента

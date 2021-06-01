@@ -15,6 +15,8 @@ import { AuthRolesGuard } from '../../../AppGlobal/AppGlobalGuards/Auth.guard';
 @UseGuards(AuthRolesGuard)
 @Resolver()
 export class GeneralAccountsSettingsResolver {
+
+
   constructor(
     private accountsSettings: GeneralAccountsSettingsProvider
   ){}

@@ -6,9 +6,10 @@ import { AuthModule } from '../Auth/Auth.module';
 import { UsersModule } from '../../DAL/UsersService/Users.module';
 import { UpdateUserPasswordProvider } from './Providers/UpdateUserPassword/UpdateUserPassword.provider';
 import { ExtractTokenDataModule } from '../../../AppGlobal/AppGlobalModules/ExtractTokenData/ExtractTokenData.module';
+import { UserLoginModule } from '../../../AppGlobal/AppGlobalModules/UserLogin/UserLogin.module';
 
 @Module({
-  imports: [AuthModule, UsersModule, ExtractTokenDataModule],
+  imports: [AuthModule, UsersModule, ExtractTokenDataModule, UserLoginModule],
   providers: [
     GeneralAccountsSettingsResolver, GeneralAccountsSettingsProvider, UserPersonalDataProvider,
     UpdateUserPasswordProvider
