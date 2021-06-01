@@ -4,18 +4,22 @@ import { TravelInfoArgs } from '../Types/TravelInfo/TravelInfo.args';
 import { FreeSeatsSearchService } from '../../../DAL/FreeSeatsService/Services/FreeSeatsSearch.service';
 import { DayData, FreeSeatSchemaDocument } from '../../../DAL/FreeSeatsService/FreeSeats.sсhema';
 import { FreeSeatsService } from '../../../DAL/FreeSeatsService/FreeSeats.service';
+import { CheckDateProvider } from '../../../../AppGlobal/AppGlobalModules/CheckDate/CheckDate.provider';
 
 @Injectable()
 export class GetTravelsInfoProvider {
   constructor(
     private freeSeatsSearch: FreeSeatsSearchService,
     private freeSeats: FreeSeatsService,
+    private checkDate: CheckDateProvider,
   ){}
 
   async getTravelsInfo(getTravelsInfoDTO: TravelInfoArgs): Promise<TravelInfoModel[]>{
     const freeSeatsDocument = await this._getFreeSeatsDocument(getTravelsInfoDTO);
 
-    return this._mapTravelInfoModel(freeSeatsDocument)
+    const arrTravelInfoModel = this._mapTravelInfoModel(freeSeatsDocument);
+
+    return this._checkHoursInTravelInfoModelArr(arrTravelInfoModel)
   }
 
   private async _getFreeSeatsDocument(getTravelsInfoDTO: TravelInfoArgs): Promise<FreeSeatSchemaDocument>{
@@ -43,5 +47,11 @@ export class GetTravelsInfoProvider {
 
       return newTravelObject;
     });
+  }
+
+  private _checkHoursInTravelInfoModelArr(arr: TravelInfoModel[]): TravelInfoModel[]{
+    const {hour} = this.checkDate.getDate();
+
+    return arr.filter((model: TravelInfoModel) => model.startHourTravel > Number(hour) && model.remainingNumberSeats > 0)
   }
 }
