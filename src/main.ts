@@ -8,10 +8,11 @@ const start = async () => {
     const app = await NestFactory.create(AppModule);
     app.use(cookieParser());
 
-    /*app.enableCors({
-      credentials:true,
-      allowedHeaders: ["Access-Control-Allow-Origin", "http://localhost:3000"]
-    });*/
+    app.enableCors({
+      origin: true,
+      methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+      credentials: true,
+    });
 
     await app.listen(PORT, () => console.log(`Server started on PORT ${PORT}`));
   } catch (e) {
