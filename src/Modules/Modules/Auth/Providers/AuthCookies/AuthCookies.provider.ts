@@ -8,8 +8,8 @@ export class AuthCookiesProvider {
   updateTokensInCookies(tokens: GetTokens, res: Response) {
     const { accessToken, refreshToken } = tokens;
 
-    res.cookie(AuthCookiesEnum.AccessToken, `${accessToken}`);
-    res.cookie(AuthCookiesEnum.RefreshToken, `${refreshToken}`);
+    res.cookie(AuthCookiesEnum.AccessToken, `${accessToken}`,{sameSite: 'none', secure:true});
+    res.cookie(AuthCookiesEnum.RefreshToken, `${refreshToken}`,{sameSite: 'none', secure:true});
   }
 
   getTokensCookie(request: Request): GetTokens {
