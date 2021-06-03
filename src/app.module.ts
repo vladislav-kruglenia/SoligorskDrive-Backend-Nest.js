@@ -22,7 +22,8 @@ import { ClientAccountModule } from './Modules/Modules/ClientAccount/ClientAccou
       autoSchemaFile: 'src/GraphQL/schema.graphql',
       context: ({ req, res }) => ({ req, res }),
       cors: {
-        origin: 'http://localhost:3000',
+        origin: 'https://soligorsk-drive.vercel.app',
+        // origin: 'http://localhost:3000',
         credentials: true,
       },
     }),
